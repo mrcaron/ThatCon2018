@@ -1,0 +1,5 @@
+- Talk to people about Artifactory & CPP (CPP package management)
+- GVFS
+- MOQ
+- Repository pattern
+- integration tests/unit test boundary
