@@ -19,6 +19,21 @@ _Q: If you can spin up snapshots of a vm easily, does the necessity of a contain
 
 ## Example
 
-Angular front end, .NET middle, Java backend. Then he's using VSTS to build and deploy docker containers. Check out docker UCP (ucp.text.myhost.io). UCP gives a way to interact with the swarm from the machine.
+Angular front end, .NET middle, Java backend. Then he's using VSTS to build and deploy docker containers. Check out docker [UCP](https://docs.docker.com/ee/ucp/ucp-architecture/) (ucp.text.myhost.io). UCP gives a way to interact with the swarm from the machine. It comes with Docker Enterprise Edition. Also that comes with EV is the onprem trusted registry.
+
+> Docker Universal Control Plane (UCP) is the enterprise-grade cluster management solution from Docker. You install it on-premises or in your virtual private cloud, and it helps you manage your Docker cluster and applications through a single interface.
 
     docker container ls # list containers
+
+If you're using UCP, you should turn off `docker exec`, it's a security risk. There's no need for it and it increases your potential for security violations. Kuberneties/Docker Swarm is the same kind of stuff, but Kubernetes comes bundled in. 
+
+We talk about deploying stacks, described in YAML files (docker compose). Docker Compose is a separate application, running on python, (really nice for local) gives you the option to build it. In the compose file, you specify named services which are individual containers. When you specify named networks, they can address each other by service name. You can specify any number of networks and you need at least one so the services can talk to each other, because they behave as individual boxes.
+
+    docker-compose -f <compose yaml file>.yml
+    docker-compose up                  # build and start the images
+    docker-compose stop                # suspends them
+    docker-compose down                # shuts them down, at this time, you can docker up, but no changes to the container will be built. you have to remove them first.
+    docker rmi $(docker images -f ...) # removes the docker images you built when you did first compose up
+
+After making any changes to the app, remove the containers completely and rebuild & deploy them.
+
