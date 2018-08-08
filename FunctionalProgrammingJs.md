@@ -146,3 +146,51 @@ Again, like grep. Operates on a collection of size n, returns a new collection o
         return val %2 == 0;
     })
 
+#### Reduct
+
+think accumulator
+
+    let sumValue = oldArr.reduce( (acc, value, index, array) => {
+        // return operation
+    }, 0 /* default */);
+
+    const sumInitValue = arr.reduce( (acc,value) => {
+        return acc+value;
+    }, 100);
+
+    // we have functions, we can make it more intersting
+    const average = arr.reduce((total, value, index) => {
+        total += value;
+        if (index === arr.length =1) {
+            return total / arr.length;
+        }
+        else {
+            return total;
+        }
+    });
+
+| Javascript
+| data = require('./data/periodic.json')
+| // pulls in json data!
+
+### Immutability
+
+Not changing object state.
+
+    let result = [1,2,3]
+    .map ( x => x+1)
+    .filter (x => ...)
+
+#### Currying
+
+Reduces functions of multiple args to functions of one arg. Named after Haskell Curry. Partial Application. Essentially, pass all arguments and get result or pass subset and get a function awaiting input.
+
+Like passing all the arguments to the function, or pass a subset of args and get a function back that you can finish adding arguments to later.
+
+    const sum = (x,y) => x+y;
+    const sumCurry = x => y => x+y;
+
+    console.log (sum (2,1)); // 3
+    console.log(sumCurry(2)(1)); // 3
+
+    let partial = sumCurry(2); // this is the subset of args idea
