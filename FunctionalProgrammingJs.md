@@ -4,7 +4,7 @@ John Ptacek, @jptacek, https://jptacek.com
 
 ## Intro
 
-JS can do just about anything, lots of styles: procedural, oo, functional (especially with ES6). Developers need to challenge themselves to think functionallly, the language doesn't necessarily provide tools to do it.
+JS can do just about anything, lots of styles: procedural, oo, functional (especially with [ES6](https://es6.io/)). Developers need to challenge themselves to think functionallly, the language doesn't necessarily provide tools to do it.
 
 ### What
 

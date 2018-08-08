@@ -25,15 +25,34 @@ Angular front end, .NET middle, Java backend. Then he's using VSTS to build and 
 
     docker container ls # list containers
 
-If you're using UCP, you should turn off `docker exec`, it's a security risk. There's no need for it and it increases your potential for security violations. Kuberneties/Docker Swarm is the same kind of stuff, but Kubernetes comes bundled in. 
+If you're using [UCP](https://docs.docker.com/ee/ucp/), you should turn off `docker exec`, it's a security risk. There's no need for it and it increases your potential for security violations. Kuberneties/Docker Swarm is the same kind of stuff, but Kubernetes comes bundled in. DTR = Docker Trusted Reg.
 
-We talk about deploying stacks, described in YAML files (docker compose). Docker Compose is a separate application, running on python, (really nice for local) gives you the option to build it. In the compose file, you specify named services which are individual containers. When you specify named networks, they can address each other by service name. You can specify any number of networks and you need at least one so the services can talk to each other, because they behave as individual boxes.
+We talk about deploying stacks, described in YAML files (docker compose). Docker Compose is a separate application, running on python, (really nice for local) gives you the option to build it. In the compose file, you specify named services which are individual containers. When you specify named networks, they can address each other by service name. You can specify any number of networks and you need at least one so the services can talk each other, because they behave as individual boxes. Each service is in a directory which contains a dockerfile.
 
-    docker-compose -f <compose yaml file>.yml
-    docker-compose up                  # build and start the images
-    docker-compose stop                # suspends them
-    docker-compose down                # shuts them down, at this time, you can docker up, but no changes to the container will be built. you have to remove them first.
-    docker rmi $(docker images -f ...) # removes the docker images you built when you did first compose up
+    docker-compose -f <compose yaml file>.yml up     # build and start the images
+    docker-compose stop                              # suspends them
+    docker-compose down                              # shuts them down, at this time, you can docker up, but no changes 
+                                                     #    to the container will be built. you have to remove them first.
+    docker rmi $(docker images -f ...)               # removes the docker images you built when you did first compose up
 
-After making any changes to the app, remove the containers completely and rebuild & deploy them.
+After making any changes to the app, remove the containers completely and rebuild & deploy them. 
 
+DockerFiles can do multi stage builds. Such as
+
+    FROM node:... as builder
+    RUN...
+    RUN...
+    ARG ...
+
+    FROM nginx:...
+    RUN...
+    COPY --from builder...
+    ...
+
+_Not sure I got this, but it's googlable_. _Speaker tip: There was a lot that was glossed over, not really offered as gramatical explaination._
+
+vsts: Docker build agents? The build would normally add the finished docker image to a trusted repo. A _stack file_ is different than _compose_ due to the lack of **build:** directives; otherwise it's the same kind of file. You don't want to use the build directory (compose file) in a production environment. If you want to run a docker service, you want to run a swarm. Then Docker Swarm can handle load balancing?
+
+* [deploy a stack to a swarm](https://docs.docker.com/engine/swarm/stack-deploy/)
+* [what's a stack?](https://docs.docker.com/get-started/part5/)
+* [Stack files for your service](https://docs.docker.com/docker-cloud/getting-started/deploy-app/11_service_stacks/)
