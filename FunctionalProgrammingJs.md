@@ -181,7 +181,7 @@ Not changing object state.
     .map ( x => x+1)
     .filter (x => ...)
 
-#### Currying
+### Currying
 
 Reduces functions of multiple args to functions of one arg. Named after Haskell Curry. Partial Application. Essentially, pass all arguments and get result or pass subset and get a function awaiting input.
 
@@ -194,3 +194,7 @@ Like passing all the arguments to the function, or pass a subset of args and get
     console.log(sumCurry(2)(1)); // 3
 
     let partial = sumCurry(2); // this is the subset of args idea
+
+### Recursion
+
+Functional purists don't use loops. EVER. Recursion has action and stop. Tail call optimization in ES6. Graph theory applications.
